@@ -1,0 +1,12 @@
+{
+  "name": "Gagra Medical Centre",
+  "short_name": "Gagra Med",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#0369a1",
+  "background_color": "#ffffff",
+  "icons": [
+    { "src": "https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
