@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="google-site-verification" content="T3SsCGHkqqunKH5m6wxyD10Bp1WT6bDFWUNxmJK7DOc" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Gagra Medical Centre | Complete Hospital Workflow</title>
@@ -19,7 +18,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
-    /* ===== ORIGINAL STYLES + WORKFLOW ADDITIONS ===== */
+    /* (all original styles from previous version – keep the same) */
     * { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
     .font-serif { font-family: 'Playfair Display', serif; }
 
@@ -71,7 +70,6 @@
       100% { transform: translateX(0); }
     }
 
-    /* Hero (original, lighter overlay) */
     .hero-fullscreen { position: relative; height: 100vh; width: 100%; overflow: hidden; }
     .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 0; transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1; }
     .hero-slide.active { opacity: 1; z-index: 2; }
@@ -119,7 +117,6 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
 
-    /* PWA install banner */
     .install-banner {
       position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(135deg, #0369a1, #0284c7);
       color: white; padding: 12px; text-align: center; z-index: 1000; transform: translateY(-100%);
@@ -129,7 +126,6 @@
     .install-banner button { background: white; color: #0369a1; border: none; padding: 6px 16px; border-radius: 30px; font-weight: bold; margin-left: 12px; cursor: pointer; }
     .hms-only { display: none; }
 
-    /* HMS Sidebar & Workflow styles */
     .sidebar-item { transition: all 0.2s; cursor: pointer; border-radius: 12px; }
     .sidebar-item:hover { background: rgba(3,105,161,0.1); transform: translateX(4px); }
     .sidebar-item.active { background: linear-gradient(90deg, #0369a1, #0284c7); color: white; }
@@ -159,108 +155,53 @@
   </div>
 
   <!-- FLOATING WHATSAPP -->
-  <a href="https://wa.me/254708865910?text=Hello%20Gagra%20Medical%20Centre%2C%20I%20need%20medical%20assistance" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 bg-green-500 text-white rounded-full p-4 shadow-2xl z-50 flex items-center justify-center hover:bg-green-600 transition-all duration-300 wa-float">
-    <i class="fab fa-whatsapp text-3xl"></i><span class="hidden md:inline ml-2 font-semibold text-sm">Chat Now</span>
-  </a>
+  <a href="https://wa.me/254708865910?text=Hello%20Gagra%20Medical%20Centre%2C%20I%20need%20medical%20assistance" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 bg-green-500 text-white rounded-full p-4 shadow-2xl z-50 flex items-center justify-center hover:bg-green-600 transition-all duration-300 wa-float"><i class="fab fa-whatsapp text-3xl"></i><span class="hidden md:inline ml-2 font-semibold text-sm">Chat Now</span></a>
 
   <!-- CHATBOT (simplified) -->
-  <button id="chatbotToggle" class="fixed bottom-6 left-6 bg-[#0369a1] text-white rounded-full p-4 shadow-2xl z-50 flex items-center justify-center hover:scale-110 transition-all duration-300">
-    <i class="fas fa-comment-dots text-2xl"></i><span class="hidden md:inline ml-2 font-semibold text-sm">AI Assistant</span>
-  </button>
+  <button id="chatbotToggle" class="fixed bottom-6 left-6 bg-[#0369a1] text-white rounded-full p-4 shadow-2xl z-50 flex items-center justify-center hover:scale-110 transition-all duration-300"><i class="fas fa-comment-dots text-2xl"></i><span class="hidden md:inline ml-2 font-semibold text-sm">AI Assistant</span></button>
   <div id="chatbotWindow" class="fixed bottom-24 left-6 w-[95vw] max-w-96 h-[500px] max-h-[70vh] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl z-50 hidden flex-col overflow-hidden border border-gray-200 dark:border-gray-700">
-    <div class="bg-gradient-to-r from-[#0369a1] to-[#0284c7] text-white p-4 flex justify-between items-center">
-      <div class="flex items-center gap-3"><div class="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center"><i class="fas fa-robot text-xl"></i></div><div><span class="font-semibold">Gagra AI Assistant</span><p class="text-xs text-white/70">Online • Replies instantly</p></div></div>
-      <button id="closeChatbot" class="hover:bg-white/20 rounded-full w-8 h-8 flex items-center justify-center transition">✕</button>
-    </div>
+    <div class="bg-gradient-to-r from-[#0369a1] to-[#0284c7] text-white p-4 flex justify-between items-center"><div class="flex items-center gap-3"><div class="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center"><i class="fas fa-robot text-xl"></i></div><div><span class="font-semibold">Gagra AI Assistant</span><p class="text-xs text-white/70">Online • Replies instantly</p></div></div><button id="closeChatbot" class="hover:bg-white/20 rounded-full w-8 h-8 flex items-center justify-center transition">✕</button></div>
     <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50 dark:bg-gray-900"></div>
-    <div class="p-4 border-t dark:border-gray-700 bg-white dark:bg-gray-800 flex gap-2">
-      <input type="text" id="chatInput" placeholder="Type your message..." class="flex-1 p-3 rounded-xl border dark:border-gray-600 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0369a1] text-sm">
-      <button id="sendChat" class="bg-[#0369a1] text-white px-4 py-3 rounded-xl hover:bg-[#0284c7] transition"><i class="fas fa-paper-plane"></i></button>
-    </div>
+    <div class="p-4 border-t dark:border-gray-700 bg-white dark:bg-gray-800 flex gap-2"><input type="text" id="chatInput" placeholder="Type your message..." class="flex-1 p-3 rounded-xl border dark:border-gray-600 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0369a1] text-sm"><button id="sendChat" class="bg-[#0369a1] text-white px-4 py-3 rounded-xl hover:bg-[#0284c7] transition"><i class="fas fa-paper-plane"></i></button></div>
   </div>
 
-  <!-- LOGIN MODAL -->
+  <!-- LOGIN MODAL (with Reset button and credentials hint) -->
   <div id="loginModal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[100] hidden">
     <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 w-full max-w-md shadow-2xl">
-      <div class="text-center mb-4"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" class="h-16 w-16 mx-auto rounded-xl object-cover"><h2 class="text-2xl font-bold mt-2">Hospital Management System</h2><p class="text-sm text-gray-500">Select role and login</p></div>
+      <div class="text-center mb-4"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" class="h-16 w-16 mx-auto rounded-xl object-cover"><h2 class="text-2xl font-bold mt-2">Hospital Management System</h2><p class="text-sm text-gray-500">Use any role below (case‑sensitive)</p></div>
+      <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg mb-4 text-sm">
+        <p class="font-semibold">Demo Credentials:</p>
+        <p>👑 Admin: <code>admin</code> / <code>Admin@123</code></p>
+        <p>📋 Reception: <code>reception</code> / <code>Recep@123</code></p>
+        <p>🩺 Doctor: <code>doctor</code> / <code>Doctor@123</code></p>
+        <p>🔬 Lab: <code>lab</code> / <code>Lab@123</code></p>
+        <p>💊 Pharmacy: <code>pharmacy</code> / <code>Pharm@123</code></p>
+        <p>💰 Cashier: <code>cashier</code> / <code>Cash@123</code></p>
+      </div>
       <input type="text" id="loginUsername" placeholder="Username" class="w-full p-3 mb-3 border rounded-xl dark:bg-gray-700">
       <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 mb-4 border rounded-xl dark:bg-gray-700">
       <button onclick="authenticateUser()" class="w-full btn-primary py-3 rounded-xl font-bold">Login</button>
-      <button onclick="closeLoginModal()" class="w-full mt-3 text-gray-500">Cancel</button>
+      <button onclick="resetAllData()" class="w-full mt-2 bg-yellow-500 text-white py-2 rounded-xl text-sm">⚠️ Reset Demo Data (clears all)</button>
+      <button onclick="closeLoginModal()" class="w-full mt-2 text-gray-500">Cancel</button>
     </div>
   </div>
 
-  <!-- HOSPITAL MANAGEMENT SYSTEM DASHBOARD (Workflow enabled) -->
+  <!-- HOSPITAL MANAGEMENT SYSTEM DASHBOARD (same as before) -->
   <div id="hmsDashboard" class="hidden fixed inset-0 z-[200] bg-gray-100 dark:bg-gray-900 overflow-hidden flex">
     <div class="w-72 bg-white dark:bg-gray-800 shadow-xl flex flex-col h-full overflow-y-auto">
-      <div class="p-5 border-b dark:border-gray-700">
-        <div class="flex items-center gap-3"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" class="h-10 w-10 rounded-lg object-cover"><div><h2 class="font-bold text-lg">Gagra Medical</h2><p class="text-xs text-gray-500">HMS - Clinical Workflow</p></div></div>
-      </div>
+      <div class="p-5 border-b dark:border-gray-700"><div class="flex items-center gap-3"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" class="h-10 w-10 rounded-lg object-cover"><div><h2 class="font-bold text-lg">Gagra Medical</h2><p class="text-xs text-gray-500">HMS - Clinical Workflow</p></div></div></div>
       <div class="flex-1 py-4 px-3 space-y-1" id="sidebarMenu"></div>
-      <div class="p-4 border-t dark:border-gray-700">
-        <div class="flex items-center justify-between"><span id="userRoleDisplay" class="text-sm font-semibold bg-blue-100 dark:bg-blue-900 px-3 py-1 rounded-full"></span><button onclick="logoutHMS()" class="bg-red-500 text-white px-3 py-1 rounded-lg text-sm">Logout</button></div>
-      </div>
+      <div class="p-4 border-t dark:border-gray-700"><div class="flex items-center justify-between"><span id="userRoleDisplay" class="text-sm font-semibold bg-blue-100 dark:bg-blue-900 px-3 py-1 rounded-full"></span><button onclick="logoutHMS()" class="bg-red-500 text-white px-3 py-1 rounded-lg text-sm">Logout</button></div></div>
     </div>
-    <div class="flex-1 overflow-auto p-6">
-      <div class="mb-6 flex justify-between items-center"><h1 id="dashboardTitle" class="text-2xl font-bold">Dashboard</h1><button onclick="closeHMS()" class="text-gray-500 hover:text-gray-700"><i class="fas fa-times-circle text-2xl"></i></button></div>
-      <div id="tabContent"></div>
-    </div>
+    <div class="flex-1 overflow-auto p-6"><div class="mb-6 flex justify-between items-center"><h1 id="dashboardTitle" class="text-2xl font-bold">Dashboard</h1><button onclick="closeHMS()" class="text-gray-500 hover:text-gray-700"><i class="fas fa-times-circle text-2xl"></i></button></div><div id="tabContent"></div></div>
   </div>
 
-  <!-- ORIGINAL PUBLIC WEBSITE (full, Print Info removed) -->
+  <!-- ORIGINAL PUBLIC WEBSITE (same as before, shortened but complete) -->
   <div id="publicSite">
-    <div class="bg-[#0f172a] text-white text-sm py-2 hidden md:block relative z-30">
-      <div class="container mx-auto px-5 md:px-12 flex justify-between items-center">
-        <div class="flex items-center gap-4">
-          <span><i class="fas fa-phone-alt text-green-400 mr-1"></i> Emergency: <a href="tel:+254708865910" class="font-bold hover:text-green-400">0708 865 910</a></span>
-          <span class="text-gray-400">|</span><span><i class="fas fa-clock text-blue-400 mr-1"></i> 24/7 Emergency & Pharmacy</span>
-        </div>
-        <div class="flex items-center gap-4">
-          <span><i class="fas fa-shield-alt text-green-400 mr-1"></i> Insurance Accepted</span>
-          <span class="text-gray-400">|</span>
-          <button id="topLoginBtn" class="hms-only bg-purple-700 text-white px-3 py-1 rounded-full text-xs font-semibold"><i class="fas fa-lock mr-1"></i>Staff Login</button>
-          <a href="#appointment" class="bg-green-600 text-white px-4 py-1 rounded-full text-xs font-semibold hover:bg-green-500 transition">Book Now</a>
-        </div>
-      </div>
-    </div>
-
-    <header class="absolute top-0 left-0 right-0 z-20 py-4 px-5 md:px-12 flex justify-between items-center text-white">
-      <a href="#home" class="flex items-center gap-3 no-underline">
-        <div class="h-12 w-12 rounded-xl overflow-hidden bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/20"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" alt="Logo" class="h-full w-full object-cover"></div>
-        <div><h1 class="text-xl font-bold">Gagra Medical Centre</h1><p class="text-[10px] text-white/80">"Come Discover Solutions in Healthcare"</p></div>
-      </a>
-      <div class="hidden lg:flex items-center gap-6">
-        <nav class="flex space-x-1 font-medium text-sm">
-          <a href="#home" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Home</a>
-          <a href="#about" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">About</a>
-          <a href="#team" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Our Team</a>
-          <a href="#services" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Services</a>
-          <a href="#blog" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Blog</a>
-          <a href="#ambulance" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Emergency</a>
-          <a href="#contact" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Contact</a>
-        </nav>
-        <div class="flex items-center gap-2">
-          <button id="darkModeToggle" class="p-2 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition"><i id="darkModeIcon" class="fas fa-moon"></i></button>
-          <a href="#appointment" class="btn-primary px-5 py-2 rounded-full shadow-md text-sm font-semibold whitespace-nowrap">📅 Book Now</a>
-        </div>
-      </div>
-      <button id="mobileMenuToggle" class="lg:hidden text-2xl p-2 rounded-lg hover:bg-white/10 transition"><i class="fas fa-bars"></i></button>
-    </header>
-
+    <div class="bg-[#0f172a] text-white text-sm py-2 hidden md:block relative z-30"><div class="container mx-auto px-5 md:px-12 flex justify-between items-center"><div class="flex items-center gap-4"><span><i class="fas fa-phone-alt text-green-400 mr-1"></i> Emergency: <a href="tel:+254708865910" class="font-bold hover:text-green-400">0708 865 910</a></span><span class="text-gray-400">|</span><span><i class="fas fa-clock text-blue-400 mr-1"></i> 24/7 Emergency & Pharmacy</span></div><div class="flex items-center gap-4"><span><i class="fas fa-shield-alt text-green-400 mr-1"></i> Insurance Accepted</span><span class="text-gray-400">|</span><button id="topLoginBtn" class="hms-only bg-purple-700 text-white px-3 py-1 rounded-full text-xs font-semibold"><i class="fas fa-lock mr-1"></i>Staff Login</button><a href="#appointment" class="bg-green-600 text-white px-4 py-1 rounded-full text-xs font-semibold hover:bg-green-500 transition">Book Now</a></div></div></div>
+    <header class="absolute top-0 left-0 right-0 z-20 py-4 px-5 md:px-12 flex justify-between items-center text-white"><a href="#home" class="flex items-center gap-3 no-underline"><div class="h-12 w-12 rounded-xl overflow-hidden bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/20"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" alt="Logo" class="h-full w-full object-cover"></div><div><h1 class="text-xl font-bold">Gagra Medical Centre</h1><p class="text-[10px] text-white/80">"Come Discover Solutions in Healthcare"</p></div></a><div class="hidden lg:flex items-center gap-6"><nav class="flex space-x-1 font-medium text-sm"><a href="#home" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Home</a><a href="#about" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">About</a><a href="#team" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Our Team</a><a href="#services" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Services</a><a href="#blog" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Blog</a><a href="#ambulance" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Emergency</a><a href="#contact" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Contact</a></nav><div class="flex items-center gap-2"><button id="darkModeToggle" class="p-2 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition"><i id="darkModeIcon" class="fas fa-moon"></i></button><a href="#appointment" class="btn-primary px-5 py-2 rounded-full shadow-md text-sm font-semibold whitespace-nowrap">📅 Book Now</a></div></div><button id="mobileMenuToggle" class="lg:hidden text-2xl p-2 rounded-lg hover:bg-white/10 transition"><i class="fas fa-bars"></i></button></header>
     <main id="main-content">
-      <!-- Hero slideshow (original 4 slides) -->
-      <section class="hero-fullscreen">
-        <div class="hero-slide active" style="background-image: url('https://i.ibb.co/rKZQH35y/Gemini-Generated-Image-2pzloh2pzloh2pzl.png');"><div class="hero-content-overlay"><h1 class="hero-title">Come Discover <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-sky-100">Solutions in Healthcare</span></h1><p class="hero-subtitle">Modern Consultation Rooms • Expert Doctors • Compassionate Care • Insurance Accepted</p><div class="hero-buttons flex flex-wrap gap-4 justify-center"><a href="#appointment" class="btn-primary px-8 py-3 rounded-full shadow-xl text-lg font-bold flex items-center gap-2">📅 Book Appointment <i class="fas fa-arrow-right"></i></a><a href="#contact" class="bg-transparent text-white border-2 border-white px-8 py-3 rounded-full text-lg font-bold hover:bg-white hover:text-[#0369a1] transition">📞 Call Us</a></div></div></div>
-        <div class="hero-slide" style="background-image: url('https://i.ibb.co/2YqgWrkK/gagra-medical-consultation-room.png');"><div class="hero-content-overlay"><h1 class="hero-title">24/7 <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-sky-100">Pharmacy Services</span></h1><p class="hero-subtitle">Fully Stocked • Prescription Filling • OTC Medications • M-Pesa Till: 3046560</p><div class="hero-buttons flex flex-wrap gap-4 justify-center"><a href="#appointment" class="btn-primary px-8 py-3 rounded-full shadow-xl text-lg font-bold flex items-center gap-2">📅 Book Appointment <i class="fas fa-arrow-right"></i></a><a href="#contact" class="bg-transparent text-white border-2 border-white px-8 py-3 rounded-full text-lg font-bold hover:bg-white hover:text-[#0369a1] transition">📞 Call Us</a></div></div></div>
-        <div class="hero-slide" style="background-image: url('https://i.ibb.co/Mx1MFbbs/Whats-App-Image-2026-05-04-at-5-28-27-PM.jpg');"><div class="hero-content-overlay"><h1 class="hero-title">Warm & <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-sky-100">Welcoming Reception</span></h1><p class="hero-subtitle">Friendly Staff • Quick Check-in • Insurance Registration Assistance</p><div class="hero-buttons flex flex-wrap gap-4 justify-center"><a href="#appointment" class="btn-primary px-8 py-3 rounded-full shadow-xl text-lg font-bold flex items-center gap-2">📅 Book Appointment <i class="fas fa-arrow-right"></i></a><a href="#contact" class="bg-transparent text-white border-2 border-white px-8 py-3 rounded-full text-lg font-bold hover:bg-white hover:text-[#0369a1] transition">📞 Call Us</a></div></div></div>
-        <div class="hero-slide" style="background-image: url('https://i.ibb.co/KxPPj7zM/Whats-App-Image-2026-05-04-at-5-28-28-PM.jpg');"><div class="hero-content-overlay"><h1 class="hero-title">Comfortable <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-sky-100">Patient Wards</span></h1><p class="hero-subtitle">Clean • Safe • 24/7 Nursing Care • Affordable Rates</p><div class="hero-buttons flex flex-wrap gap-4 justify-center"><a href="#appointment" class="btn-primary px-8 py-3 rounded-full shadow-xl text-lg font-bold flex items-center gap-2">📅 Book Appointment <i class="fas fa-arrow-right"></i></a><a href="#contact" class="bg-transparent text-white border-2 border-white px-8 py-3 rounded-full text-lg font-bold hover:bg-white hover:text-[#0369a1] transition">📞 Call Us</a></div></div></div>
-        <button class="hero-nav hero-prev" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
-        <button class="hero-nav hero-next" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
-        <div class="hero-dots"><span class="hero-dot active" data-slide="0"></span><span class="hero-dot" data-slide="1"></span><span class="hero-dot" data-slide="2"></span><span class="hero-dot" data-slide="3"></span></div>
-        <div class="scroll-indicator animate-bounce" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})"><i class="fas fa-chevron-down text-2xl opacity-70"></i></div>
-      </section>
-
-      <!-- Emergency Banner, About, Team, Services, Blog, Ambulance, Contact, Appointment (all original, shortened for brevity but fully present in final file) -->
+      <section class="hero-fullscreen"><div class="hero-slide active" style="background-image: url('https://i.ibb.co/rKZQH35y/Gemini-Generated-Image-2pzloh2pzloh2pzl.png');"><div class="hero-content-overlay"><h1 class="hero-title">Come Discover <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-sky-100">Solutions in Healthcare</span></h1><p class="hero-subtitle">Modern Consultation Rooms • Expert Doctors • Compassionate Care • Insurance Accepted</p><div class="hero-buttons flex flex-wrap gap-4 justify-center"><a href="#appointment" class="btn-primary px-8 py-3 rounded-full shadow-xl text-lg font-bold flex items-center gap-2">📅 Book Appointment <i class="fas fa-arrow-right"></i></a><a href="#contact" class="bg-transparent text-white border-2 border-white px-8 py-3 rounded-full text-lg font-bold hover:bg-white hover:text-[#0369a1] transition">📞 Call Us</a></div></div></div><div class="hero-slide" style="background-image: url('https://i.ibb.co/2YqgWrkK/gagra-medical-consultation-room.png');"><div class="hero-content-overlay"><h1 class="hero-title">24/7 <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-sky-100">Pharmacy Services</span></h1><p class="hero-subtitle">Fully Stocked • Prescription Filling • OTC Medications • M-Pesa Till: 3046560</p><div class="hero-buttons flex flex-wrap gap-4 justify-center"><a href="#appointment" class="btn-primary px-8 py-3 rounded-full shadow-xl text-lg font-bold flex items-center gap-2">📅 Book Appointment <i class="fas fa-arrow-right"></i></a><a href="#contact" class="bg-transparent text-white border-2 border-white px-8 py-3 rounded-full text-lg font-bold hover:bg-white hover:text-[#0369a1] transition">📞 Call Us</a></div></div></div><div class="hero-slide" style="background-image: url('https://i.ibb.co/Mx1MFbbs/Whats-App-Image-2026-05-04-at-5-28-27-PM.jpg');"><div class="hero-content-overlay"><h1 class="hero-title">Warm & <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-sky-100">Welcoming Reception</span></h1><p class="hero-subtitle">Friendly Staff • Quick Check-in • Insurance Registration Assistance</p><div class="hero-buttons flex flex-wrap gap-4 justify-center"><a href="#appointment" class="btn-primary px-8 py-3 rounded-full shadow-xl text-lg font-bold flex items-center gap-2">📅 Book Appointment <i class="fas fa-arrow-right"></i></a><a href="#contact" class="bg-transparent text-white border-2 border-white px-8 py-3 rounded-full text-lg font-bold hover:bg-white hover:text-[#0369a1] transition">📞 Call Us</a></div></div></div><div class="hero-slide" style="background-image: url('https://i.ibb.co/KxPPj7zM/Whats-App-Image-2026-05-04-at-5-28-28-PM.jpg');"><div class="hero-content-overlay"><h1 class="hero-title">Comfortable <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-sky-100">Patient Wards</span></h1><p class="hero-subtitle">Clean • Safe • 24/7 Nursing Care • Affordable Rates</p><div class="hero-buttons flex flex-wrap gap-4 justify-center"><a href="#appointment" class="btn-primary px-8 py-3 rounded-full shadow-xl text-lg font-bold flex items-center gap-2">📅 Book Appointment <i class="fas fa-arrow-right"></i></a><a href="#contact" class="bg-transparent text-white border-2 border-white px-8 py-3 rounded-full text-lg font-bold hover:bg-white hover:text-[#0369a1] transition">📞 Call Us</a></div></div></div><button class="hero-nav hero-prev" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button><button class="hero-nav hero-next" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button><div class="hero-dots"><span class="hero-dot active" data-slide="0"></span><span class="hero-dot" data-slide="1"></span><span class="hero-dot" data-slide="2"></span><span class="hero-dot" data-slide="3"></span></div><div class="scroll-indicator animate-bounce" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})"><i class="fas fa-chevron-down text-2xl opacity-70"></i></div></section>
       <section class="bg-red-600 text-white py-4 relative z-10"><div class="container mx-auto px-5 md:px-12 flex flex-wrap justify-between items-center gap-4"><div class="flex items-center gap-3"><i class="fas fa-ambulance text-2xl ambulance-animate"></i><span class="font-bold text-lg">Medical Emergency? Call 24/7</span></div><div class="flex items-center gap-4 flex-wrap"><a href="tel:+254708865910" class="btn-emergency bg-white text-red-600 font-bold px-6 py-3 rounded-full shadow-lg hover:bg-gray-100 transition flex items-center gap-2"><i class="fas fa-phone-alt"></i> 0708 865 910</a><div class="text-sm flex flex-wrap gap-2"><a href="tel:+254713096598" class="underline font-semibold hover:text-gray-200">0713 096598</a> | <a href="tel:+254799609250" class="underline font-semibold hover:text-gray-200">0799 609250</a> | <a href="tel:+254797860977" class="underline font-semibold hover:text-gray-200">0797 860977</a></div></div></div></section>
       <section id="about" class="py-20 card-bg"><div class="container mx-auto px-5 md:px-12"><div class="grid lg:grid-cols-2 gap-12 items-center"><div data-aos="fade-right"><span class="text-[#0369a1] dark:text-[#38bdf8] font-semibold uppercase text-sm">About Our Centre</span><h2 class="text-4xl md:text-5xl font-bold mt-3 mb-6">Gagra Medical Centre — <span class="text-[#0369a1]">Quality Healthcare for All</span></h2><p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">Located at <strong>Gagra Madiany Junction</strong>, we are a 24/7 medical facility serving Uyoma, Rarieda, and Siaya County. <strong class="text-green-600">Insurance Accepted</strong> — bring your insurance card for covered services.</p><div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-xl mb-6"><p class="font-bold text-green-700 dark:text-green-400 mb-2"><i class="fas fa-mobile-alt mr-2"></i>M-Pesa Payment Instructions:</p><ol class="list-decimal ml-5 text-sm space-y-1 text-gray-700 dark:text-gray-300"><li>Go to M-Pesa menu</li><li>Select <strong>"Lipa Na M-Pesa"</strong></li><li>Choose <strong>"Buy Goods" (Till Number)</strong></li><li>Enter Till Number: <strong class="text-green-700 text-base">3046560</strong></li><li>Enter amount and PIN</li><li>Show confirmation</li></ol></div><a href="#team" class="btn-primary inline-flex items-center gap-2 px-6 py-3 rounded-full">Meet Our Team <i class="fas fa-arrow-right"></i></a></div><div class="grid grid-cols-2 gap-4" data-aos="fade-left"><div><img class="rounded-2xl shadow-lg h-52 w-full object-cover img-zoom" src="https://i.ibb.co/rKZQH35y/Gemini-Generated-Image-2pzloh2pzloh2pzl.png" alt="Consultation Room"><p class="text-xs text-center mt-2 text-gray-500">🏥 Consultation Room</p></div><div><img class="rounded-2xl shadow-lg h-52 w-full object-cover img-zoom mt-6" src="https://i.ibb.co/2YqgWrkK/gagra-medical-consultation-room.png" alt="Pharmacy"><p class="text-xs text-center mt-2 text-gray-500">💊 Pharmacy</p></div><div><img class="rounded-2xl shadow-lg h-48 w-full object-cover img-zoom" src="https://i.ibb.co/Mx1MFbbs/Whats-App-Image-2026-05-04-at-5-28-27-PM.jpg" alt="Reception Area"><p class="text-xs text-center mt-2 text-gray-500">📋 Reception</p></div><div><img class="rounded-2xl shadow-lg h-48 w-full object-cover img-zoom mt-6" src="https://i.ibb.co/KxPPj7zM/Whats-App-Image-2026-05-04-at-5-28-28-PM.jpg" alt="Patient Ward"><p class="text-xs text-center mt-2 text-gray-500">🛏️ Patient Ward</p></div></div></div></div></section>
       <section id="team" class="py-20 bg-gray-50 dark:bg-gray-800/50"><div class="container mx-auto px-5 md:px-12"><div class="text-center mb-14" data-aos="fade-up"><h2 class="text-4xl font-bold">Meet Our Medical Team</h2><p class="text-gray-500">Experienced & compassionate healthcare professionals</p></div><div class="grid md:grid-cols-4 gap-8"><div class="card-bg rounded-2xl shadow-lg p-6 text-center team-card"><img src="https://i.ibb.co/2YHfJ0bF/Gemini-Generated-Image-hcgsjnhcgsjnhcgs.png" alt="Dr. Eston Charles Ogeta" class="w-32 h-32 rounded-full mx-auto object-cover border-4 border-[#0369a1]"><h3 class="text-xl font-bold mt-4">Dr. Eston Charles Ogeta</h3><p class="text-[#0369a1] font-semibold">Medical Director</p></div><div class="card-bg rounded-2xl shadow-lg p-6 text-center team-card"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" alt="Gagra Medical" class="w-32 h-32 rounded-full mx-auto object-cover border-4 border-[#10b981]"><h3 class="text-xl font-bold mt-4">Catherine Othiambo</h3><p class="text-[#10b981] font-semibold">Senior Nursing Officer</p><p class="text-xs text-gray-500 mt-1">8+ Years Experience</p></div><div class="card-bg rounded-2xl shadow-lg p-6 text-center team-card"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" alt="Gagra Medical" class="w-32 h-32 rounded-full mx-auto object-cover border-4 border-[#f59e0b]"><h3 class="text-xl font-bold mt-4">Yvonne Onyango</h3><p class="text-[#f59e0b] font-semibold">Chief Lab Expert</p><p class="text-xs text-gray-500 mt-1">Quality Control Certified</p></div><div class="card-bg rounded-2xl shadow-lg p-6 text-center team-card"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" alt="Gagra Medical" class="w-32 h-32 rounded-full mx-auto object-cover border-4 border-[#8b5cf6]"><h3 class="text-xl font-bold mt-4">Rosemercy A</h3><p class="text-[#8b5cf6] font-semibold">Administrator</p><p class="text-xs text-gray-500 mt-1">Insurance & Appointments</p></div></div></div></section>
@@ -312,7 +253,7 @@
     const installBanner = document.getElementById('installBanner');
     window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; installBanner.classList.add('show'); setTimeout(()=>{ if(installBanner.classList.contains('show')) installBanner.classList.remove('show'); }, 5000); });
     window.addEventListener('scroll', () => { if(installBanner.classList.contains('show')) installBanner.classList.remove('show'); });
-    document.getElementById('installBtn').addEventListener('click', async () => { if(deferredPrompt){ deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; installBanner.classList.remove('show'); } else { alert("To install, tap the browser menu (⋮) and select 'Install app' or 'Add to Home Screen'."); } });
+    document.getElementById('installBtn').addEventListener('click', async () => { if(deferredPrompt){ deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; installBanner.classList.remove('show'); } else { alert("To install, tap the browser menu (⋮) and select 'Install app'."); } });
     function isPWAInstalled() { return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; }
     function updateHMSButtons() { const pwa = isPWAInstalled(); document.querySelectorAll('.hms-only').forEach(el => el.style.display = pwa ? (el.tagName === 'BUTTON' ? 'inline-flex' : 'block') : 'none'); }
     window.matchMedia('(display-mode: standalone)').addEventListener('change', updateHMSButtons);
@@ -321,9 +262,18 @@
     // ========== HOSPITAL MANAGEMENT SYSTEM (FULL WORKFLOW) ==========
     let currentUser = { role: null };
     
-    // Initialize localStorage with workflow data structures
+    // FORCE reset & initialize demo data
+    function resetAllData() {
+      if(confirm("⚠️ This will erase all current data and restore demo data. Proceed?")) {
+        localStorage.clear();
+        initWorkflowData();
+        showToast("Demo data restored. Please login again.");
+        closeLoginModal();
+      }
+    }
+    
     function initWorkflowData() {
-      // Users (roles: admin, receptionist, doctor, lab, pharmacy, cashier)
+      // Users (all roles)
       if(!localStorage.getItem('gagra_users')) localStorage.setItem('gagra_users', JSON.stringify([
         { id:1, username:'admin', password:'Admin@123', role:'admin', name:'System Admin' },
         { id:2, username:'reception', password:'Recep@123', role:'receptionist', name:'Jane Reception' },
@@ -332,49 +282,36 @@
         { id:5, username:'pharmacy', password:'Pharm@123', role:'pharmacy', name:'Peter Pharm' },
         { id:6, username:'cashier', password:'Cash@123', role:'cashier', name:'Mary Cashier' }
       ]));
-      
-      // Patients (demographics)
       if(!localStorage.getItem('gagra_patients')) localStorage.setItem('gagra_patients', JSON.stringify([
         { id:1, name:"John Otieno", age:45, gender:"Male", phone:"0712345678", address:"Uyoma", regDate:"2025-01-10" },
         { id:2, name:"Mary Akinyi", age:30, gender:"Female", phone:"0722334455", address:"Rarieda", regDate:"2025-02-15" }
       ]));
-      
-      // Visits (active or discharged)
       if(!localStorage.getItem('gagra_visits')) localStorage.setItem('gagra_visits', JSON.stringify([
         { id:1, patientId:1, patientName:"John Otieno", doctorAssigned:"Dr. Eston", status:"active", admissionDate:"2025-06-10", dischargeDate:null, billStatus:"pending" }
       ]));
-      
-      // Lab orders
       if(!localStorage.getItem('gagra_lab_orders')) localStorage.setItem('gagra_lab_orders', JSON.stringify([
         { id:1, visitId:1, patientName:"John Otieno", test:"Malaria", status:"pending", result:null, requestedBy:"Dr. Eston", dateRequested:"2025-06-10", dateCompleted:null }
       ]));
-      
-      // Pharmacy orders (prescriptions)
       if(!localStorage.getItem('gagra_pharmacy_orders')) localStorage.setItem('gagra_pharmacy_orders', JSON.stringify([
         { id:1, visitId:1, patientName:"John Otieno", medicine:"Paracetamol", quantity:10, status:"pending", dispensedBy:null, dateDispensed:null }
       ]));
-      
-      // Pharmacy stock (inventory)
       if(!localStorage.getItem('gagra_pharmacy_stock')) localStorage.setItem('gagra_pharmacy_stock', JSON.stringify([
         { id:1, name:"Paracetamol", stock:200, price:50, unit:"tablet" },
         { id:2, name:"Amoxicillin", stock:150, price:120, unit:"capsule" }
       ]));
-      
-      // Bills (one per visit)
       if(!localStorage.getItem('gagra_bills')) localStorage.setItem('gagra_bills', JSON.stringify([
         { id:1, visitId:1, patientName:"John Otieno", totalAmount:0, paidAmount:0, balance:0, status:"pending", paymentMethod:null, transactionRef:null, dateBilled:null }
       ]));
-      
-      // Lab test catalog
       if(!localStorage.getItem('gagra_lab_tests')) localStorage.setItem('gagra_lab_tests', JSON.stringify([
         { id:1, name:"Malaria", price:200 },
         { id:2, name:"Blood Sugar", price:300 },
         { id:3, name:"Urinalysis", price:250 }
       ]));
     }
+    
+    // Initialize data on page load (ensures all keys exist)
     initWorkflowData();
     
-    // Helper to get pending counts
     function getPendingCounts() {
       const labPending = JSON.parse(localStorage.getItem('gagra_lab_orders')).filter(o=>o.status==='pending').length;
       const pharmacyPending = JSON.parse(localStorage.getItem('gagra_pharmacy_orders')).filter(o=>o.status==='pending').length;
@@ -383,7 +320,6 @@
       return { labPending, pharmacyPending, activeVisits, pendingBills };
     }
     
-    // Render role-specific sidebar
     function renderHMSDashboard() {
       let menuItems = [];
       if(currentUser.role === 'admin') menuItems = ['Dashboard', 'User Management', 'Patients', 'Visits', 'Lab Orders', 'Pharmacy Orders', 'Bills', 'Stock', 'Lab Tests'];
@@ -488,13 +424,11 @@
       let newPatient = { id:newId, name, age, gender, phone, address, regDate:new Date().toISOString().slice(0,10) };
       patients.push(newPatient);
       localStorage.setItem('gagra_patients', JSON.stringify(patients));
-      // Create visit
       let visits = JSON.parse(localStorage.getItem('gagra_visits'));
       let visitId = visits.length? Math.max(...visits.map(v=>v.id))+1 : 1;
       let newVisit = { id:visitId, patientId:newId, patientName:name, doctorAssigned:doctor, status:"active", admissionDate:new Date().toISOString().slice(0,10), dischargeDate:null, billStatus:"pending" };
       visits.push(newVisit);
       localStorage.setItem('gagra_visits', JSON.stringify(visits));
-      // Create empty bill for this visit
       let bills = JSON.parse(localStorage.getItem('gagra_bills'));
       let billId = bills.length? Math.max(...bills.map(b=>b.id))+1 : 1;
       let newBill = { id:billId, visitId, patientName:name, totalAmount:0, paidAmount:0, balance:0, status:"pending", paymentMethod:null, transactionRef:null, dateBilled:null };
@@ -509,8 +443,7 @@
       if(onlyActive) visits = visits.filter(v=>v.status==='active');
       let html = `<div class="overflow-x-auto"><table class="min-w-full bg-white dark:bg-gray-800 rounded-xl"><thead class="bg-gray-100 dark:bg-gray-700"><tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Admission Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
       visits.forEach(v=>{
-        html += `<tr><td class="p-3">${v.id}</td><td>${v.patientName}</td><td>${v.doctorAssigned}</td><td>${v.admissionDate}</td><td><span class="px-2 py-1 rounded-full text-xs ${v.status==='active'?'bg-green-100 text-green-800':'bg-gray-300'}">${v.status}</span></td>
-        <td><button onclick="viewVisitDetails(${v.id})" class="bg-blue-500 text-white px-3 py-1 rounded text-sm">View</button></td></tr>`;
+        html += `<tr><td class="p-3">${v.id}</td><td>${v.patientName}</td><td>${v.doctorAssigned}</td><td>${v.admissionDate}</td><td><span class="px-2 py-1 rounded-full text-xs ${v.status==='active'?'bg-green-100 text-green-800':'bg-gray-300'}">${v.status}</span></td><td><button onclick="viewVisitDetails(${v.id})" class="bg-blue-500 text-white px-3 py-1 rounded text-sm">View</button></td></tr>`;
       });
       container.innerHTML = html + `</tbody></table></div>`;
     }
@@ -551,7 +484,6 @@
     };
     window.addLabOrder = function(visitId) {
       let test = document.getElementById('newTest').value.trim();
-      let price = parseFloat(document.getElementById('testPrice').value);
       if(!test) return;
       let labs = JSON.parse(localStorage.getItem('gagra_lab_orders'));
       let newId = labs.length? Math.max(...labs.map(l=>l.id))+1 : 1;
@@ -634,7 +566,7 @@
     }
     function renderStock(container) {
       let stock = JSON.parse(localStorage.getItem('gagra_pharmacy_stock'));
-      let html = `<div class="overflow-x-auto"><table class="min-w-full bg-white dark:bg-gray-800 rounded-xl"><thead><tr><th>Medicine</th><th>Stock</th><th>Price (KES)</th><th>Unit</th></tr></thead><tbody>${stock.map(s=>`<tr><td>${s.name}</td><td>${s.stock}</td><td>${s.price}</td><td>${s.unit}</td></tr>`).join('')}</tbody></table></div>`;
+      let html = `<div class="overflow-x-auto"><table class="min-w-full bg-white dark:bg-gray-800 rounded-xl"><thead><tr><th>Medicine</th><th>Stock</th><th>Price (KES)</th><th>Unit</th></tr></thead><tbody>${stock.map(s=>`<tr><td class="p-3">${s.name}</td><td class="p-3">${s.stock}</td><td class="p-3">${s.price}</td><td class="p-3">${s.unit}</td></tr>`).join('')}</tbody></table></div>`;
       container.innerHTML = html;
     }
     
@@ -718,7 +650,7 @@
       loadModule('discharge_patient');
     };
     
-    // ========== ADMIN MODULES (User Management, Patients, etc.) ==========
+    // ========== ADMIN MODULES ==========
     function renderUserManagement(container) {
       let users = JSON.parse(localStorage.getItem('gagra_users'));
       let html = `<div class="mb-4"><button onclick="addUser()" class="btn-primary px-4 py-2 rounded-lg">+ Add User</button></div><div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Username</th><th>Name</th><th>Role</th><th>Actions</th></tr></thead><tbody>${users.map(u=>`<tr><td>${u.id}</td><td>${u.username}</td><td>${u.name}</td><td>${u.role}</td><td><button onclick="deleteUser(${u.id})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button></td></tr>`).join('')}</tbody></table></div>`;
@@ -734,9 +666,9 @@
       let visits = JSON.parse(localStorage.getItem('gagra_visits'));
       container.innerHTML = `<div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Status</th><th>Admission</th><th>Discharge</th></tr></thead><tbody>${visits.map(v=>`<tr><td>${v.id}</td><td>${v.patientName}</td><td>${v.doctorAssigned}</td><td>${v.status}</td><td>${v.admissionDate}</td><td>${v.dischargeDate||'-'}</td></tr>`).join('')}</tbody></table></div>`;
     }
-    function renderLabOrders(container) { let orders=JSON.parse(localStorage.getItem('gagra_lab_orders')); container.innerHTML=`<div class="overflow-x-auto"><table>...</table></div>`; } // shortened
-    function renderPharmacyOrders(container) { let orders=JSON.parse(localStorage.getItem('gagra_pharmacy_orders')); container.innerHTML=`<div>...</div>`; }
-    function renderBills(container) { let bills=JSON.parse(localStorage.getItem('gagra_bills')); container.innerHTML=`<div>...</div>`; }
+    function renderLabOrders(container) { let orders=JSON.parse(localStorage.getItem('gagra_lab_orders')); container.innerHTML=`<div>Total Lab Orders: ${orders.length}</div>`; }
+    function renderPharmacyOrders(container) { let orders=JSON.parse(localStorage.getItem('gagra_pharmacy_orders')); container.innerHTML=`<div>Total Pharmacy Orders: ${orders.length}</div>`; }
+    function renderBills(container) { let bills=JSON.parse(localStorage.getItem('gagra_bills')); container.innerHTML=`<div>Total Bills: ${bills.length}</div>`; }
     function renderLabTests(container) { let tests=JSON.parse(localStorage.getItem('gagra_lab_tests')); let html=`<div><button onclick="addLabTest()" class="btn-primary px-3 py-1 rounded">+ Add Test</button><ul>${tests.map(t=>`<li>${t.name} - KES ${t.price}</li>`).join('')}</ul></div>`; container.innerHTML=html; }
     window.addLabTest = function() { let name=prompt("Test name"); let price=prompt("Price"); let tests=JSON.parse(localStorage.getItem('gagra_lab_tests')); let newId=tests.length?Math.max(...tests.map(t=>t.id))+1:1; tests.push({id:newId,name,price:parseInt(price)}); localStorage.setItem('gagra_lab_tests',JSON.stringify(tests)); loadModule('lab_tests'); };
     
@@ -746,7 +678,7 @@
       let password = document.getElementById('loginPassword').value.trim();
       let users = JSON.parse(localStorage.getItem('gagra_users'));
       let user = users.find(u => u.username === username && u.password === password);
-      if(!user) { alert("Invalid credentials"); return; }
+      if(!user) { alert("Invalid credentials. Check case sensitivity or click Reset Demo Data."); return; }
       currentUser = user;
       closeLoginModal();
       document.getElementById('publicSite').classList.add('hidden');
