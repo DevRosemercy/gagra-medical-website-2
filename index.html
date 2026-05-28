@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
   <title>Gagra Medical Centre | Complete Hospital Workflow</title>
   <meta name="description" content="Gagra Medical Centre – Complete hospital management with reception, doctor, lab, pharmacy, billing & discharge.">
   <meta name="theme-color" content="#0369a1">
+  <!-- PWA manifest and service worker (create separate files if needed) -->
   <link rel="manifest" href="/manifest.json">
   <link rel="apple-touch-icon" href="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -18,8 +20,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
+    /* ========== ALL STYLES (compact but complete) ========== */
     * { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
     .font-serif { font-family: 'Playfair Display', serif; }
+
     :root {
       --primary: #0369a1;
       --primary-dark: #0284c7;
@@ -37,30 +41,36 @@
     }
     body { background-color: var(--bg-body); color: var(--text-primary); transition: all 0.3s ease; }
     .card-bg { background-color: var(--bg-card); border: 1px solid var(--border-color); }
+
     .btn-primary {
       background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
       transition: all 0.3s ease;
       color: white;
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(3,105,161,0.35); }
+
     .btn-emergency { background: #dc2626; color: white; animation: pulse-ring 1.5s infinite; }
     @keyframes pulse-ring {
       0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
       70% { box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); }
       100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
     }
+
     .wa-float { animation: pulse-green 2s infinite; }
     @keyframes pulse-green {
       0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
       70% { transform: scale(1.05); box-shadow: 0 0 0 18px rgba(37, 211, 102, 0); }
       100% { transform: scale(1); }
     }
+
     .ambulance-animate { animation: ambulanceMove 1s ease-in-out infinite; }
     @keyframes ambulanceMove {
       0% { transform: translateX(0); }
       50% { transform: translateX(10px); }
       100% { transform: translateX(0); }
     }
+
+    /* Hero slideshow */
     .hero-fullscreen { position: relative; height: 100vh; width: 100%; overflow: hidden; }
     .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 0; transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1; }
     .hero-slide.active { opacity: 1; z-index: 2; }
@@ -77,13 +87,16 @@
     .hero-nav:hover { background: rgba(255,255,255,0.4); transform: translateY(-50%) scale(1.1); }
     .hero-prev { left: 2rem; } .hero-next { right: 2rem; }
     .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); color: white; z-index: 10; text-align: center; cursor: pointer; }
+
     .img-zoom { transition: transform 0.5s ease, box-shadow 0.3s ease; }
     .img-zoom:hover { transform: scale(1.03); box-shadow: 0 20px 35px -10px rgba(0,0,0,0.2); }
     .service-card, .blog-card, .team-card { transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
     .service-card:hover, .blog-card:hover, .team-card:hover { transform: translateY(-8px); box-shadow: 0 25px 40px -15px rgba(0,0,0,0.2); }
+
     .chat-message-user { background: linear-gradient(135deg, #0369a1, #0284c7); color: white; }
     .chat-message-bot { background-color: #e2e8f0; color: #1e293b; }
     body.dark .chat-message-bot { background-color: #334155; color: #f1f5f9; }
+
     .toast-notification {
       position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
       background: #1e293b; color: white; padding: 12px 24px; border-radius: 50px;
@@ -95,6 +108,7 @@
       85% { opacity: 1; transform: translateX(-50%) translateY(0); }
       100% { opacity: 0; transform: translateX(-50%) translateY(-20px); visibility: hidden; }
     }
+
     @media (max-width: 768px) {
       .hero-title { font-size: 2rem; }
       .hero-subtitle { font-size: 0.9rem; }
@@ -104,6 +118,7 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
 
+    /* Install banner & HMS styles */
     .install-banner {
       position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(135deg, #0369a1, #0284c7);
       color: white; padding: 12px; text-align: center; z-index: 1000; transform: translateY(-100%);
@@ -152,10 +167,10 @@
     <div class="p-4 border-t dark:border-gray-700 bg-white dark:bg-gray-800 flex gap-2"><input type="text" id="chatInput" placeholder="Type your message..." class="flex-1 p-3 rounded-xl border dark:border-gray-600 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0369a1] text-sm"><button id="sendChat" class="bg-[#0369a1] text-white px-4 py-3 rounded-xl hover:bg-[#0284c7] transition"><i class="fas fa-paper-plane"></i></button></div>
   </div>
 
-  <!-- LOGIN MODAL (with credentials displayed) -->
+  <!-- LOGIN MODAL (with credentials and reset button) -->
   <div id="loginModal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[100] hidden">
     <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 w-full max-w-md shadow-2xl">
-      <div class="text-center mb-4"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" class="h-16 w-16 mx-auto rounded-xl object-cover"><h2 class="text-2xl font-bold mt-2">Hospital Management System</h2><p class="text-sm text-gray-500">Enter credentials below (case‑sensitive)</p></div>
+      <div class="text-center mb-4"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" class="h-16 w-16 mx-auto rounded-xl object-cover"><h2 class="text-2xl font-bold mt-2">Hospital Management System</h2><p class="text-sm text-gray-500">Enter credentials (case‑sensitive)</p></div>
       <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg mb-4 text-sm">
         <p class="font-semibold">Demo Credentials:</p>
         <p>👑 Admin: <code>admin</code> / <code>Admin@123</code></p>
@@ -168,12 +183,12 @@
       <input type="text" id="loginUsername" placeholder="Username" class="w-full p-3 mb-3 border rounded-xl dark:bg-gray-700">
       <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 mb-4 border rounded-xl dark:bg-gray-700">
       <button onclick="authenticateUser()" class="w-full btn-primary py-3 rounded-xl font-bold">Login</button>
-      <button onclick="resetAllData()" class="w-full mt-2 bg-yellow-500 text-white py-2 rounded-xl text-sm">⚠️ Reset Demo Data (clears all)</button>
+      <button onclick="resetAllData()" class="w-full mt-2 bg-yellow-500 text-white py-2 rounded-xl text-sm">⚠️ Reset Demo Data</button>
       <button onclick="closeLoginModal()" class="w-full mt-2 text-gray-500">Cancel</button>
     </div>
   </div>
 
-  <!-- HMS DASHBOARD -->
+  <!-- HOSPITAL MANAGEMENT SYSTEM DASHBOARD -->
   <div id="hmsDashboard" class="hidden fixed inset-0 z-[200] bg-gray-100 dark:bg-gray-900 overflow-hidden flex">
     <div class="w-72 bg-white dark:bg-gray-800 shadow-xl flex flex-col h-full overflow-y-auto">
       <div class="p-5 border-b dark:border-gray-700"><div class="flex items-center gap-3"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" class="h-10 w-10 rounded-lg object-cover"><div><h2 class="font-bold text-lg">Gagra Medical</h2><p class="text-xs text-gray-500">HMS - Clinical Workflow</p></div></div></div>
@@ -183,7 +198,7 @@
     <div class="flex-1 overflow-auto p-6"><div class="mb-6 flex justify-between items-center"><h1 id="dashboardTitle" class="text-2xl font-bold">Dashboard</h1><button onclick="closeHMS()" class="text-gray-500 hover:text-gray-700"><i class="fas fa-times-circle text-2xl"></i></button></div><div id="tabContent"></div></div>
   </div>
 
-  <!-- PUBLIC WEBSITE (original, shortened for brevity) -->
+  <!-- PUBLIC WEBSITE (original full content) -->
   <div id="publicSite">
     <div class="bg-[#0f172a] text-white text-sm py-2 hidden md:block relative z-30"><div class="container mx-auto px-5 md:px-12 flex justify-between items-center"><div class="flex items-center gap-4"><span><i class="fas fa-phone-alt text-green-400 mr-1"></i> Emergency: <a href="tel:+254708865910" class="font-bold hover:text-green-400">0708 865 910</a></span><span class="text-gray-400">|</span><span><i class="fas fa-clock text-blue-400 mr-1"></i> 24/7 Emergency & Pharmacy</span></div><div class="flex items-center gap-4"><span><i class="fas fa-shield-alt text-green-400 mr-1"></i> Insurance Accepted</span><span class="text-gray-400">|</span><button id="topLoginBtn" class="hms-only bg-purple-700 text-white px-3 py-1 rounded-full text-xs font-semibold"><i class="fas fa-lock mr-1"></i>Staff Login</button><a href="#appointment" class="bg-green-600 text-white px-4 py-1 rounded-full text-xs font-semibold hover:bg-green-500 transition">Book Now</a></div></div></div>
     <header class="absolute top-0 left-0 right-0 z-20 py-4 px-5 md:px-12 flex justify-between items-center text-white"><a href="#home" class="flex items-center gap-3 no-underline"><div class="h-12 w-12 rounded-xl overflow-hidden bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/20"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" alt="Logo" class="h-full w-full object-cover"></div><div><h1 class="text-xl font-bold">Gagra Medical Centre</h1><p class="text-[10px] text-white/80">"Come Discover Solutions in Healthcare"</p></div></a><div class="hidden lg:flex items-center gap-6"><nav class="flex space-x-1 font-medium text-sm"><a href="#home" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Home</a><a href="#about" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">About</a><a href="#team" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Our Team</a><a href="#services" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Services</a><a href="#blog" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Blog</a><a href="#ambulance" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Emergency</a><a href="#contact" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Contact</a></nav><div class="flex items-center gap-2"><button id="darkModeToggle" class="p-2 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition"><i id="darkModeIcon" class="fas fa-moon"></i></button><a href="#appointment" class="btn-primary px-5 py-2 rounded-full shadow-md text-sm font-semibold whitespace-nowrap">📅 Book Now</a></div></div><button id="mobileMenuToggle" class="lg:hidden text-2xl p-2 rounded-lg hover:bg-white/10 transition"><i class="fas fa-bars"></i></button></header>
@@ -202,7 +217,7 @@
   </div>
 
   <script>
-    // ========== ORIGINAL WEBSITE SCRIPTS (preserved) ==========
+    // ========== ORIGINAL WEBSITE SCRIPTS ==========
     AOS.init({ duration: 800, once: true });
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.hero-dot');
@@ -246,13 +261,13 @@
     window.matchMedia('(display-mode: standalone)').addEventListener('change', updateHMSButtons);
     window.addEventListener('load', updateHMSButtons);
 
-    // ========== HOSPITAL MANAGEMENT SYSTEM (SIMPLIFIED + WORKING) ==========
+    // ========== HOSPITAL MANAGEMENT SYSTEM (COMPLETE WORKFLOW) ==========
     let currentUser = { role: null };
     
-    // FORCE reset all data on every page load (ensures credentials exist)
+    // Force reset demo data on every page load (guarantees credentials exist)
     function forceResetData() {
       localStorage.clear();
-      // Users
+      // Users (6 roles)
       localStorage.setItem('gagra_users', JSON.stringify([
         { id:1, username:'admin', password:'Admin@123', role:'admin', name:'System Admin' },
         { id:2, username:'reception', password:'Recep@123', role:'receptionist', name:'Jane Reception' },
@@ -287,14 +302,14 @@
       localStorage.setItem('gagra_bills', JSON.stringify([
         { id:1, visitId:1, patientName:"John Otieno", totalAmount:0, paidAmount:0, balance:0, status:"pending", paymentMethod:null, transactionRef:null, dateBilled:null }
       ]));
-      // Lab tests catalog
+      // Lab test catalog
       localStorage.setItem('gagra_lab_tests', JSON.stringify([
         { id:1, name:"Malaria", price:200 },
         { id:2, name:"Blood Sugar", price:300 },
         { id:3, name:"Urinalysis", price:250 }
       ]));
     }
-    forceResetData(); // every page load resets everything to demo state
+    forceResetData(); // every page load resets to clean demo state
     
     function resetAllData() {
       if(confirm("⚠️ This will erase all current data and restore demo data. Proceed?")) {
@@ -386,7 +401,7 @@
       `;
     }
     
-    // Receptionist modules
+    // ========== RECEPTIONIST MODULES ==========
     function renderRegisterPatient(container) {
       container.innerHTML = `
         <div class="max-w-2xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-2xl shadow">
@@ -435,19 +450,18 @@
       if(onlyActive) visits = visits.filter(v=>v.status==='active');
       let html = `<div class="overflow-x-auto"><table class="min-w-full bg-white dark:bg-gray-800 rounded-xl"><thead class="bg-gray-100 dark:bg-gray-700"><tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Admission Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
       visits.forEach(v=>{
-        html += `<tr><td class="p-3">${v.id}</td><td>${v.patientName}</td><td>${v.doctorAssigned}</td><td>${v.admissionDate}</td><td><span class="px-2 py-1 rounded-full text-xs ${v.status==='active'?'bg-green-100 text-green-800':'bg-gray-300'}">${v.status}</span></td><td><button onclick="viewVisitDetails(${v.id})" class="bg-blue-500 text-white px-3 py-1 rounded text-sm">View</button></td></tr>`;
+        html += `<tr><td class="p-3">${v.id}</td><td class="p-3">${v.patientName}</td><td class="p-3">${v.doctorAssigned}</td><td class="p-3">${v.admissionDate}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${v.status==='active'?'bg-green-100 text-green-800':'bg-gray-300'}">${v.status}</span></td><td class="p-3"><button onclick="viewVisitDetails(${v.id})" class="bg-blue-500 text-white px-3 py-1 rounded text-sm">View</button></td></tr>`;
       });
       container.innerHTML = html + `</tbody></table></div>`;
     }
     window.viewVisitDetails = function(visitId) {
-      let visits = JSON.parse(localStorage.getItem('gagra_visits'));
-      let visit = visits.find(v=>v.id===visitId);
+      let visit = JSON.parse(localStorage.getItem('gagra_visits')).find(v=>v.id===visitId);
       let labOrders = JSON.parse(localStorage.getItem('gagra_lab_orders')).filter(o=>o.visitId===visitId);
       let pharmOrders = JSON.parse(localStorage.getItem('gagra_pharmacy_orders')).filter(o=>o.visitId===visitId);
       alert(`Visit ID: ${visit.id}\nPatient: ${visit.patientName}\nDoctor: ${visit.doctorAssigned}\nStatus: ${visit.status}\nLab Orders: ${labOrders.length}\nPharmacy Orders: ${pharmOrders.length}`);
     };
     
-    // Doctor modules
+    // ========== DOCTOR MODULES ==========
     function renderDoctorVisits(container) {
       let visits = JSON.parse(localStorage.getItem('gagra_visits')).filter(v=>v.status==='active');
       let html = `<div class="space-y-4">`;
@@ -502,7 +516,7 @@
       let pharmList = document.getElementById('pharmList'); if(pharmList) pharmList.innerHTML = pharmOrders.map(p=>`<li>${p.medicine} x${p.quantity} - ${p.status}</li>`).join('');
     }
     
-    // Lab modules
+    // ========== LAB MODULES ==========
     function renderPendingLabOrders(container) {
       let orders = JSON.parse(localStorage.getItem('gagra_lab_orders')).filter(o=>o.status==='pending');
       let html = `<div class="space-y-3">`;
@@ -528,7 +542,7 @@
       container.innerHTML = `<div class="space-y-3">${orders.map(o=>`<div class="order-card order-completed p-4"><b>${o.patientName}</b> - ${o.test}<br>Result: ${o.result}<br>Completed: ${o.dateCompleted}</div>`).join('')}</div>`;
     }
     
-    // Pharmacy modules
+    // ========== PHARMACY MODULES ==========
     function renderPendingPharmacyOrders(container) {
       let orders = JSON.parse(localStorage.getItem('gagra_pharmacy_orders')).filter(o=>o.status==='pending');
       let html = `<div class="space-y-3">`;
@@ -562,7 +576,7 @@
       container.innerHTML = html;
     }
     
-    // Cashier modules
+    // ========== CASHIER MODULES ==========
     function renderPendingBills(container) {
       let bills = JSON.parse(localStorage.getItem('gagra_bills')).filter(b=>b.status==='pending');
       let visits = JSON.parse(localStorage.getItem('gagra_visits'));
@@ -642,21 +656,21 @@
       loadModule('discharge_patient');
     };
     
-    // Admin modules (short versions)
+    // ========== ADMIN MODULES ==========
     function renderUserManagement(container) {
       let users = JSON.parse(localStorage.getItem('gagra_users'));
-      let html = `<div class="mb-4"><button onclick="addUser()" class="btn-primary px-4 py-2 rounded-lg">+ Add User</button></div><div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Username</th><th>Name</th><th>Role</th><th>Actions</th></tr></thead><tbody>${users.map(u=>`</td><td class="p-3">${u.id}</td><td class="p-3">${u.username}</td><td class="p-3">${u.name}</td><td class="p-3">${u.role}</td><td class="p-3"><button onclick="deleteUser(${u.id})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button></td>`).join('')}</tbody></table></div>`;
+      let html = `<div class="mb-4"><button onclick="addUser()" class="btn-primary px-4 py-2 rounded-lg">+ Add User</button></div><div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Username</th><th>Name</th><th>Role</th><th>Actions</th></tr></thead><tbody>${users.map(u=>`<tr><td class="p-3">${u.id}</td><td class="p-3">${u.username}</td><td class="p-3">${u.name}</td><td class="p-3">${u.role}</td><td class="p-3"><button onclick="deleteUser(${u.id})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button></td></tr>`).join('')}</tbody></table></div>`;
       container.innerHTML = html;
     }
     window.addUser = function() { let username=prompt("Username"); let pass=prompt("Password"); let name=prompt("Full name"); let role=prompt("Role (admin/receptionist/doctor/lab/pharmacy/cashier)"); let users=JSON.parse(localStorage.getItem('gagra_users')); let newId=users.length?Math.max(...users.map(u=>u.id))+1:1; users.push({id:newId,username,password:pass,name,role}); localStorage.setItem('gagra_users',JSON.stringify(users)); loadModule('user_management'); };
     window.deleteUser = function(id) { if(confirm("Delete user?")){ let users=JSON.parse(localStorage.getItem('gagra_users')).filter(u=>u.id!==id); localStorage.setItem('gagra_users',JSON.stringify(users)); loadModule('user_management'); } };
     function renderPatients(container) {
       let patients = JSON.parse(localStorage.getItem('gagra_patients'));
-      container.innerHTML = `<div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Name</th><th>Age</th><th>Phone</th><th>Address</th></tr></thead><tbody>${patients.map(p=>`<tr><td class="p-3">${p.id}</td><td class="p-3">${p.name}</td><td class="p-3">${p.age}</td><td class="p-3">${p.phone}</td><td class="p-3">${p.address}</td>`).join('')}</tbody></table></div>`;
+      container.innerHTML = `<div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Name</th><th>Age</th><th>Phone</th><th>Address</th></tr></thead><tbody>${patients.map(p=>`<tr><td class="p-3">${p.id}</td><td class="p-3">${p.name}</td><td class="p-3">${p.age}</td><td class="p-3">${p.phone}</td><td class="p-3">${p.address}</td></tr>`).join('')}</tbody></table></div>`;
     }
     function renderAllVisits(container) {
       let visits = JSON.parse(localStorage.getItem('gagra_visits'));
-      container.innerHTML = `<div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Status</th><th>Admission</th><th>Discharge</th></tr></thead><tbody>${visits.map(v=>`<tr><td class="p-3">${v.id}</td><td class="p-3">${v.patientName}</td><td class="p-3">${v.doctorAssigned}</td><td class="p-3">${v.status}</td><td class="p-3">${v.admissionDate}</td><td class="p-3">${v.dischargeDate||'-'}</td>`).join('')}</tbody></table></div>`;
+      container.innerHTML = `<div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Status</th><th>Admission</th><th>Discharge</th></tr></thead><tbody>${visits.map(v=>`<tr><td class="p-3">${v.id}</td><td class="p-3">${v.patientName}</td><td class="p-3">${v.doctorAssigned}</td><td class="p-3">${v.status}</td><td class="p-3">${v.admissionDate}</td><td class="p-3">${v.dischargeDate||'-'}</td></tr>`).join('')}</tbody><td></div>`;
     }
     function renderLabOrders(container) { let orders=JSON.parse(localStorage.getItem('gagra_lab_orders')); container.innerHTML=`<div class="p-4">Total Lab Orders: ${orders.length}</div>`; }
     function renderPharmacyOrders(container) { let orders=JSON.parse(localStorage.getItem('gagra_pharmacy_orders')); container.innerHTML=`<div class="p-4">Total Pharmacy Orders: ${orders.length}</div>`; }
@@ -685,7 +699,7 @@
     document.getElementById('floatingLoginBtn')?.addEventListener('click', showLoginModal);
     document.getElementById('topLoginBtn')?.addEventListener('click', showLoginModal);
     
-    // Register service worker
+    // Register service worker (optional)
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW error:', err)));
     }
