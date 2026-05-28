@@ -18,10 +18,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
-    /* (all original styles from previous version – keep the same) */
     * { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
     .font-serif { font-family: 'Playfair Display', serif; }
-
     :root {
       --primary: #0369a1;
       --primary-dark: #0284c7;
@@ -30,7 +28,6 @@
       --text-primary: #1e293b;
       --border-color: #e2e8f0;
     }
-
     body.dark {
       --primary: #38bdf8;
       --bg-body: #0f172a;
@@ -38,38 +35,32 @@
       --text-primary: #f1f5f9;
       --border-color: #334155;
     }
-
     body { background-color: var(--bg-body); color: var(--text-primary); transition: all 0.3s ease; }
     .card-bg { background-color: var(--bg-card); border: 1px solid var(--border-color); }
-
     .btn-primary {
       background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
       transition: all 0.3s ease;
       color: white;
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(3,105,161,0.35); }
-
     .btn-emergency { background: #dc2626; color: white; animation: pulse-ring 1.5s infinite; }
     @keyframes pulse-ring {
       0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
       70% { box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); }
       100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
     }
-
     .wa-float { animation: pulse-green 2s infinite; }
     @keyframes pulse-green {
       0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
       70% { transform: scale(1.05); box-shadow: 0 0 0 18px rgba(37, 211, 102, 0); }
       100% { transform: scale(1); }
     }
-
     .ambulance-animate { animation: ambulanceMove 1s ease-in-out infinite; }
     @keyframes ambulanceMove {
       0% { transform: translateX(0); }
       50% { transform: translateX(10px); }
       100% { transform: translateX(0); }
     }
-
     .hero-fullscreen { position: relative; height: 100vh; width: 100%; overflow: hidden; }
     .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 0; transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1; }
     .hero-slide.active { opacity: 1; z-index: 2; }
@@ -86,16 +77,13 @@
     .hero-nav:hover { background: rgba(255,255,255,0.4); transform: translateY(-50%) scale(1.1); }
     .hero-prev { left: 2rem; } .hero-next { right: 2rem; }
     .scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); color: white; z-index: 10; text-align: center; cursor: pointer; }
-
     .img-zoom { transition: transform 0.5s ease, box-shadow 0.3s ease; }
     .img-zoom:hover { transform: scale(1.03); box-shadow: 0 20px 35px -10px rgba(0,0,0,0.2); }
     .service-card, .blog-card, .team-card { transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
     .service-card:hover, .blog-card:hover, .team-card:hover { transform: translateY(-8px); box-shadow: 0 25px 40px -15px rgba(0,0,0,0.2); }
-
     .chat-message-user { background: linear-gradient(135deg, #0369a1, #0284c7); color: white; }
     .chat-message-bot { background-color: #e2e8f0; color: #1e293b; }
     body.dark .chat-message-bot { background-color: #334155; color: #f1f5f9; }
-
     .toast-notification {
       position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
       background: #1e293b; color: white; padding: 12px 24px; border-radius: 50px;
@@ -107,7 +95,6 @@
       85% { opacity: 1; transform: translateX(-50%) translateY(0); }
       100% { opacity: 0; transform: translateX(-50%) translateY(-20px); visibility: hidden; }
     }
-
     @media (max-width: 768px) {
       .hero-title { font-size: 2rem; }
       .hero-subtitle { font-size: 0.9rem; }
@@ -146,7 +133,7 @@
     <button id="installBtn">Install</button>
   </div>
 
-  <!-- FLOATING ACTION BUTTONS (with Staff Login) -->
+  <!-- FLOATING ACTION BUTTONS -->
   <div class="fixed bottom-24 right-6 flex flex-col gap-3 z-40">
     <a href="tel:+254708865910" class="bg-red-500 text-white p-3.5 rounded-full shadow-lg hover:bg-red-600 transition-all hover:scale-110"><i class="fas fa-phone-alt text-xl"></i></a>
     <a href="#appointment" class="bg-blue-500 text-white p-3.5 rounded-full shadow-lg hover:bg-blue-600 transition-all hover:scale-110"><i class="fas fa-calendar-check text-xl"></i></a>
@@ -157,7 +144,7 @@
   <!-- FLOATING WHATSAPP -->
   <a href="https://wa.me/254708865910?text=Hello%20Gagra%20Medical%20Centre%2C%20I%20need%20medical%20assistance" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 bg-green-500 text-white rounded-full p-4 shadow-2xl z-50 flex items-center justify-center hover:bg-green-600 transition-all duration-300 wa-float"><i class="fab fa-whatsapp text-3xl"></i><span class="hidden md:inline ml-2 font-semibold text-sm">Chat Now</span></a>
 
-  <!-- CHATBOT (simplified) -->
+  <!-- CHATBOT -->
   <button id="chatbotToggle" class="fixed bottom-6 left-6 bg-[#0369a1] text-white rounded-full p-4 shadow-2xl z-50 flex items-center justify-center hover:scale-110 transition-all duration-300"><i class="fas fa-comment-dots text-2xl"></i><span class="hidden md:inline ml-2 font-semibold text-sm">AI Assistant</span></button>
   <div id="chatbotWindow" class="fixed bottom-24 left-6 w-[95vw] max-w-96 h-[500px] max-h-[70vh] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl z-50 hidden flex-col overflow-hidden border border-gray-200 dark:border-gray-700">
     <div class="bg-gradient-to-r from-[#0369a1] to-[#0284c7] text-white p-4 flex justify-between items-center"><div class="flex items-center gap-3"><div class="bg-white/20 rounded-full w-10 h-10 flex items-center justify-center"><i class="fas fa-robot text-xl"></i></div><div><span class="font-semibold">Gagra AI Assistant</span><p class="text-xs text-white/70">Online • Replies instantly</p></div></div><button id="closeChatbot" class="hover:bg-white/20 rounded-full w-8 h-8 flex items-center justify-center transition">✕</button></div>
@@ -165,10 +152,10 @@
     <div class="p-4 border-t dark:border-gray-700 bg-white dark:bg-gray-800 flex gap-2"><input type="text" id="chatInput" placeholder="Type your message..." class="flex-1 p-3 rounded-xl border dark:border-gray-600 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0369a1] text-sm"><button id="sendChat" class="bg-[#0369a1] text-white px-4 py-3 rounded-xl hover:bg-[#0284c7] transition"><i class="fas fa-paper-plane"></i></button></div>
   </div>
 
-  <!-- LOGIN MODAL (with Reset button and credentials hint) -->
+  <!-- LOGIN MODAL (with credentials displayed) -->
   <div id="loginModal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-[100] hidden">
     <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 w-full max-w-md shadow-2xl">
-      <div class="text-center mb-4"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" class="h-16 w-16 mx-auto rounded-xl object-cover"><h2 class="text-2xl font-bold mt-2">Hospital Management System</h2><p class="text-sm text-gray-500">Use any role below (case‑sensitive)</p></div>
+      <div class="text-center mb-4"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" class="h-16 w-16 mx-auto rounded-xl object-cover"><h2 class="text-2xl font-bold mt-2">Hospital Management System</h2><p class="text-sm text-gray-500">Enter credentials below (case‑sensitive)</p></div>
       <div class="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg mb-4 text-sm">
         <p class="font-semibold">Demo Credentials:</p>
         <p>👑 Admin: <code>admin</code> / <code>Admin@123</code></p>
@@ -186,7 +173,7 @@
     </div>
   </div>
 
-  <!-- HOSPITAL MANAGEMENT SYSTEM DASHBOARD (same as before) -->
+  <!-- HMS DASHBOARD -->
   <div id="hmsDashboard" class="hidden fixed inset-0 z-[200] bg-gray-100 dark:bg-gray-900 overflow-hidden flex">
     <div class="w-72 bg-white dark:bg-gray-800 shadow-xl flex flex-col h-full overflow-y-auto">
       <div class="p-5 border-b dark:border-gray-700"><div class="flex items-center gap-3"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" class="h-10 w-10 rounded-lg object-cover"><div><h2 class="font-bold text-lg">Gagra Medical</h2><p class="text-xs text-gray-500">HMS - Clinical Workflow</p></div></div></div>
@@ -196,7 +183,7 @@
     <div class="flex-1 overflow-auto p-6"><div class="mb-6 flex justify-between items-center"><h1 id="dashboardTitle" class="text-2xl font-bold">Dashboard</h1><button onclick="closeHMS()" class="text-gray-500 hover:text-gray-700"><i class="fas fa-times-circle text-2xl"></i></button></div><div id="tabContent"></div></div>
   </div>
 
-  <!-- ORIGINAL PUBLIC WEBSITE (same as before, shortened but complete) -->
+  <!-- PUBLIC WEBSITE (original, shortened for brevity) -->
   <div id="publicSite">
     <div class="bg-[#0f172a] text-white text-sm py-2 hidden md:block relative z-30"><div class="container mx-auto px-5 md:px-12 flex justify-between items-center"><div class="flex items-center gap-4"><span><i class="fas fa-phone-alt text-green-400 mr-1"></i> Emergency: <a href="tel:+254708865910" class="font-bold hover:text-green-400">0708 865 910</a></span><span class="text-gray-400">|</span><span><i class="fas fa-clock text-blue-400 mr-1"></i> 24/7 Emergency & Pharmacy</span></div><div class="flex items-center gap-4"><span><i class="fas fa-shield-alt text-green-400 mr-1"></i> Insurance Accepted</span><span class="text-gray-400">|</span><button id="topLoginBtn" class="hms-only bg-purple-700 text-white px-3 py-1 rounded-full text-xs font-semibold"><i class="fas fa-lock mr-1"></i>Staff Login</button><a href="#appointment" class="bg-green-600 text-white px-4 py-1 rounded-full text-xs font-semibold hover:bg-green-500 transition">Book Now</a></div></div></div>
     <header class="absolute top-0 left-0 right-0 z-20 py-4 px-5 md:px-12 flex justify-between items-center text-white"><a href="#home" class="flex items-center gap-3 no-underline"><div class="h-12 w-12 rounded-xl overflow-hidden bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/20"><img src="https://i.ibb.co/fYLbDv5r/gagra-medical-logo.png" alt="Logo" class="h-full w-full object-cover"></div><div><h1 class="text-xl font-bold">Gagra Medical Centre</h1><p class="text-[10px] text-white/80">"Come Discover Solutions in Healthcare"</p></div></a><div class="hidden lg:flex items-center gap-6"><nav class="flex space-x-1 font-medium text-sm"><a href="#home" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Home</a><a href="#about" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">About</a><a href="#team" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Our Team</a><a href="#services" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Services</a><a href="#blog" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Blog</a><a href="#ambulance" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Emergency</a><a href="#contact" class="px-3 py-2 rounded-lg hover:bg-white/10 transition">Contact</a></nav><div class="flex items-center gap-2"><button id="darkModeToggle" class="p-2 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition"><i id="darkModeIcon" class="fas fa-moon"></i></button><a href="#appointment" class="btn-primary px-5 py-2 rounded-full shadow-md text-sm font-semibold whitespace-nowrap">📅 Book Now</a></div></div><button id="mobileMenuToggle" class="lg:hidden text-2xl p-2 rounded-lg hover:bg-white/10 transition"><i class="fas fa-bars"></i></button></header>
@@ -259,22 +246,14 @@
     window.matchMedia('(display-mode: standalone)').addEventListener('change', updateHMSButtons);
     window.addEventListener('load', updateHMSButtons);
 
-    // ========== HOSPITAL MANAGEMENT SYSTEM (FULL WORKFLOW) ==========
+    // ========== HOSPITAL MANAGEMENT SYSTEM (SIMPLIFIED + WORKING) ==========
     let currentUser = { role: null };
     
-    // FORCE reset & initialize demo data
-    function resetAllData() {
-      if(confirm("⚠️ This will erase all current data and restore demo data. Proceed?")) {
-        localStorage.clear();
-        initWorkflowData();
-        showToast("Demo data restored. Please login again.");
-        closeLoginModal();
-      }
-    }
-    
-    function initWorkflowData() {
-      // Users (all roles)
-      if(!localStorage.getItem('gagra_users')) localStorage.setItem('gagra_users', JSON.stringify([
+    // FORCE reset all data on every page load (ensures credentials exist)
+    function forceResetData() {
+      localStorage.clear();
+      // Users
+      localStorage.setItem('gagra_users', JSON.stringify([
         { id:1, username:'admin', password:'Admin@123', role:'admin', name:'System Admin' },
         { id:2, username:'reception', password:'Recep@123', role:'receptionist', name:'Jane Reception' },
         { id:3, username:'doctor', password:'Doctor@123', role:'doctor', name:'Dr. Eston' },
@@ -282,35 +261,48 @@
         { id:5, username:'pharmacy', password:'Pharm@123', role:'pharmacy', name:'Peter Pharm' },
         { id:6, username:'cashier', password:'Cash@123', role:'cashier', name:'Mary Cashier' }
       ]));
-      if(!localStorage.getItem('gagra_patients')) localStorage.setItem('gagra_patients', JSON.stringify([
+      // Patients
+      localStorage.setItem('gagra_patients', JSON.stringify([
         { id:1, name:"John Otieno", age:45, gender:"Male", phone:"0712345678", address:"Uyoma", regDate:"2025-01-10" },
         { id:2, name:"Mary Akinyi", age:30, gender:"Female", phone:"0722334455", address:"Rarieda", regDate:"2025-02-15" }
       ]));
-      if(!localStorage.getItem('gagra_visits')) localStorage.setItem('gagra_visits', JSON.stringify([
+      // Visits
+      localStorage.setItem('gagra_visits', JSON.stringify([
         { id:1, patientId:1, patientName:"John Otieno", doctorAssigned:"Dr. Eston", status:"active", admissionDate:"2025-06-10", dischargeDate:null, billStatus:"pending" }
       ]));
-      if(!localStorage.getItem('gagra_lab_orders')) localStorage.setItem('gagra_lab_orders', JSON.stringify([
+      // Lab orders
+      localStorage.setItem('gagra_lab_orders', JSON.stringify([
         { id:1, visitId:1, patientName:"John Otieno", test:"Malaria", status:"pending", result:null, requestedBy:"Dr. Eston", dateRequested:"2025-06-10", dateCompleted:null }
       ]));
-      if(!localStorage.getItem('gagra_pharmacy_orders')) localStorage.setItem('gagra_pharmacy_orders', JSON.stringify([
+      // Pharmacy orders
+      localStorage.setItem('gagra_pharmacy_orders', JSON.stringify([
         { id:1, visitId:1, patientName:"John Otieno", medicine:"Paracetamol", quantity:10, status:"pending", dispensedBy:null, dateDispensed:null }
       ]));
-      if(!localStorage.getItem('gagra_pharmacy_stock')) localStorage.setItem('gagra_pharmacy_stock', JSON.stringify([
+      // Pharmacy stock
+      localStorage.setItem('gagra_pharmacy_stock', JSON.stringify([
         { id:1, name:"Paracetamol", stock:200, price:50, unit:"tablet" },
         { id:2, name:"Amoxicillin", stock:150, price:120, unit:"capsule" }
       ]));
-      if(!localStorage.getItem('gagra_bills')) localStorage.setItem('gagra_bills', JSON.stringify([
+      // Bills
+      localStorage.setItem('gagra_bills', JSON.stringify([
         { id:1, visitId:1, patientName:"John Otieno", totalAmount:0, paidAmount:0, balance:0, status:"pending", paymentMethod:null, transactionRef:null, dateBilled:null }
       ]));
-      if(!localStorage.getItem('gagra_lab_tests')) localStorage.setItem('gagra_lab_tests', JSON.stringify([
+      // Lab tests catalog
+      localStorage.setItem('gagra_lab_tests', JSON.stringify([
         { id:1, name:"Malaria", price:200 },
         { id:2, name:"Blood Sugar", price:300 },
         { id:3, name:"Urinalysis", price:250 }
       ]));
     }
+    forceResetData(); // every page load resets everything to demo state
     
-    // Initialize data on page load (ensures all keys exist)
-    initWorkflowData();
+    function resetAllData() {
+      if(confirm("⚠️ This will erase all current data and restore demo data. Proceed?")) {
+        forceResetData();
+        showToast("Demo data restored. Please login again.");
+        closeLoginModal();
+      }
+    }
     
     function getPendingCounts() {
       const labPending = JSON.parse(localStorage.getItem('gagra_lab_orders')).filter(o=>o.status==='pending').length;
@@ -394,7 +386,7 @@
       `;
     }
     
-    // ========== RECEPTIONIST MODULES ==========
+    // Receptionist modules
     function renderRegisterPatient(container) {
       container.innerHTML = `
         <div class="max-w-2xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-2xl shadow">
@@ -455,7 +447,7 @@
       alert(`Visit ID: ${visit.id}\nPatient: ${visit.patientName}\nDoctor: ${visit.doctorAssigned}\nStatus: ${visit.status}\nLab Orders: ${labOrders.length}\nPharmacy Orders: ${pharmOrders.length}`);
     };
     
-    // ========== DOCTOR MODULES ==========
+    // Doctor modules
     function renderDoctorVisits(container) {
       let visits = JSON.parse(localStorage.getItem('gagra_visits')).filter(v=>v.status==='active');
       let html = `<div class="space-y-4">`;
@@ -473,7 +465,7 @@
       let content = `
         <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-[300]"><div class="bg-white dark:bg-gray-800 p-6 rounded-2xl w-full max-w-lg max-h-[80vh] overflow-auto">
           <h3 class="text-xl font-bold mb-2">Orders for ${visit.patientName}</h3>
-          <div class="mb-4"><h4>➕ New Lab Order</h4><div class="flex gap-2"><input type="text" id="newTest" placeholder="Test name" class="flex-1 p-2 border rounded"><input type="number" id="testPrice" placeholder="Price" class="w-24 p-2 border rounded"><button onclick="addLabOrder(${visitId})" class="btn-primary px-3 py-2 rounded">Add</button></div></div>
+          <div class="mb-4"><h4>➕ New Lab Order</h4><div class="flex gap-2"><input type="text" id="newTest" placeholder="Test name" class="flex-1 p-2 border rounded"><button onclick="addLabOrder(${visitId})" class="btn-primary px-3 py-2 rounded">Add</button></div></div>
           <div class="mb-4"><h4>➕ New Pharmacy Order</h4><div class="flex gap-2"><input type="text" id="newMedicine" placeholder="Medicine name" class="flex-1 p-2 border rounded"><input type="number" id="medQty" placeholder="Qty" class="w-24 p-2 border rounded"><button onclick="addPharmacyOrder(${visitId})" class="btn-primary px-3 py-2 rounded">Add</button></div></div>
           <div><h4>Existing Lab Orders</h4><ul id="labList"></ul><h4>Existing Pharmacy Orders</h4><ul id="pharmList"></ul></div>
           <button onclick="this.parentElement.parentElement.remove()" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded">Close</button>
@@ -510,7 +502,7 @@
       let pharmList = document.getElementById('pharmList'); if(pharmList) pharmList.innerHTML = pharmOrders.map(p=>`<li>${p.medicine} x${p.quantity} - ${p.status}</li>`).join('');
     }
     
-    // ========== LAB MODULE ==========
+    // Lab modules
     function renderPendingLabOrders(container) {
       let orders = JSON.parse(localStorage.getItem('gagra_lab_orders')).filter(o=>o.status==='pending');
       let html = `<div class="space-y-3">`;
@@ -536,7 +528,7 @@
       container.innerHTML = `<div class="space-y-3">${orders.map(o=>`<div class="order-card order-completed p-4"><b>${o.patientName}</b> - ${o.test}<br>Result: ${o.result}<br>Completed: ${o.dateCompleted}</div>`).join('')}</div>`;
     }
     
-    // ========== PHARMACY MODULE ==========
+    // Pharmacy modules
     function renderPendingPharmacyOrders(container) {
       let orders = JSON.parse(localStorage.getItem('gagra_pharmacy_orders')).filter(o=>o.status==='pending');
       let html = `<div class="space-y-3">`;
@@ -570,7 +562,7 @@
       container.innerHTML = html;
     }
     
-    // ========== CASHIER MODULE ==========
+    // Cashier modules
     function renderPendingBills(container) {
       let bills = JSON.parse(localStorage.getItem('gagra_bills')).filter(b=>b.status==='pending');
       let visits = JSON.parse(localStorage.getItem('gagra_visits'));
@@ -624,7 +616,7 @@
     };
     function renderAllBills(container) {
       let bills = JSON.parse(localStorage.getItem('gagra_bills'));
-      container.innerHTML = `<div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Patient</th><th>Total</th><th>Paid</th><th>Status</th></tr></thead><tbody>${bills.map(b=>`<tr><td>${b.id}</td><td>${b.patientName}</td><td>${b.totalAmount}</td><td>${b.paidAmount}</td><td>${b.status}</td></tr>`).join('')}</tbody></table></div>`;
+      container.innerHTML = `<div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Patient</th><th>Total</th><th>Paid</th><th>Status</th></tr></thead><tbody>${bills.map(b=>`<tr><td class="p-3">${b.id}</td><td class="p-3">${b.patientName}</td><td class="p-3">${b.totalAmount}</td><td class="p-3">${b.paidAmount}</td><td class="p-3">${b.status}</td></tr>`).join('')}</tbody></table></div>`;
     }
     function renderDischargePatient(container) {
       let visits = JSON.parse(localStorage.getItem('gagra_visits')).filter(v=>v.status==='active');
@@ -650,25 +642,25 @@
       loadModule('discharge_patient');
     };
     
-    // ========== ADMIN MODULES ==========
+    // Admin modules (short versions)
     function renderUserManagement(container) {
       let users = JSON.parse(localStorage.getItem('gagra_users'));
-      let html = `<div class="mb-4"><button onclick="addUser()" class="btn-primary px-4 py-2 rounded-lg">+ Add User</button></div><div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Username</th><th>Name</th><th>Role</th><th>Actions</th></tr></thead><tbody>${users.map(u=>`<tr><td>${u.id}</td><td>${u.username}</td><td>${u.name}</td><td>${u.role}</td><td><button onclick="deleteUser(${u.id})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button></td></tr>`).join('')}</tbody></table></div>`;
+      let html = `<div class="mb-4"><button onclick="addUser()" class="btn-primary px-4 py-2 rounded-lg">+ Add User</button></div><div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Username</th><th>Name</th><th>Role</th><th>Actions</th></tr></thead><tbody>${users.map(u=>`</td><td class="p-3">${u.id}</td><td class="p-3">${u.username}</td><td class="p-3">${u.name}</td><td class="p-3">${u.role}</td><td class="p-3"><button onclick="deleteUser(${u.id})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button></td>`).join('')}</tbody></table></div>`;
       container.innerHTML = html;
     }
     window.addUser = function() { let username=prompt("Username"); let pass=prompt("Password"); let name=prompt("Full name"); let role=prompt("Role (admin/receptionist/doctor/lab/pharmacy/cashier)"); let users=JSON.parse(localStorage.getItem('gagra_users')); let newId=users.length?Math.max(...users.map(u=>u.id))+1:1; users.push({id:newId,username,password:pass,name,role}); localStorage.setItem('gagra_users',JSON.stringify(users)); loadModule('user_management'); };
     window.deleteUser = function(id) { if(confirm("Delete user?")){ let users=JSON.parse(localStorage.getItem('gagra_users')).filter(u=>u.id!==id); localStorage.setItem('gagra_users',JSON.stringify(users)); loadModule('user_management'); } };
     function renderPatients(container) {
       let patients = JSON.parse(localStorage.getItem('gagra_patients'));
-      container.innerHTML = `<div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Name</th><th>Age</th><th>Phone</th><th>Address</th></tr></thead><tbody>${patients.map(p=>`<tr><td>${p.id}</td><td>${p.name}</td><td>${p.age}</td><td>${p.phone}</td><td>${p.address}</td></tr>`).join('')}</tbody></table></div>`;
+      container.innerHTML = `<div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Name</th><th>Age</th><th>Phone</th><th>Address</th></tr></thead><tbody>${patients.map(p=>`<tr><td class="p-3">${p.id}</td><td class="p-3">${p.name}</td><td class="p-3">${p.age}</td><td class="p-3">${p.phone}</td><td class="p-3">${p.address}</td>`).join('')}</tbody></table></div>`;
     }
     function renderAllVisits(container) {
       let visits = JSON.parse(localStorage.getItem('gagra_visits'));
-      container.innerHTML = `<div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Status</th><th>Admission</th><th>Discharge</th></tr></thead><tbody>${visits.map(v=>`<tr><td>${v.id}</td><td>${v.patientName}</td><td>${v.doctorAssigned}</td><td>${v.status}</td><td>${v.admissionDate}</td><td>${v.dischargeDate||'-'}</td></tr>`).join('')}</tbody></table></div>`;
+      container.innerHTML = `<div class="overflow-x-auto"><table class="min-w-full"><thead><tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Status</th><th>Admission</th><th>Discharge</th></tr></thead><tbody>${visits.map(v=>`<tr><td class="p-3">${v.id}</td><td class="p-3">${v.patientName}</td><td class="p-3">${v.doctorAssigned}</td><td class="p-3">${v.status}</td><td class="p-3">${v.admissionDate}</td><td class="p-3">${v.dischargeDate||'-'}</td>`).join('')}</tbody></table></div>`;
     }
-    function renderLabOrders(container) { let orders=JSON.parse(localStorage.getItem('gagra_lab_orders')); container.innerHTML=`<div>Total Lab Orders: ${orders.length}</div>`; }
-    function renderPharmacyOrders(container) { let orders=JSON.parse(localStorage.getItem('gagra_pharmacy_orders')); container.innerHTML=`<div>Total Pharmacy Orders: ${orders.length}</div>`; }
-    function renderBills(container) { let bills=JSON.parse(localStorage.getItem('gagra_bills')); container.innerHTML=`<div>Total Bills: ${bills.length}</div>`; }
+    function renderLabOrders(container) { let orders=JSON.parse(localStorage.getItem('gagra_lab_orders')); container.innerHTML=`<div class="p-4">Total Lab Orders: ${orders.length}</div>`; }
+    function renderPharmacyOrders(container) { let orders=JSON.parse(localStorage.getItem('gagra_pharmacy_orders')); container.innerHTML=`<div class="p-4">Total Pharmacy Orders: ${orders.length}</div>`; }
+    function renderBills(container) { let bills=JSON.parse(localStorage.getItem('gagra_bills')); container.innerHTML=`<div class="p-4">Total Bills: ${bills.length}</div>`; }
     function renderLabTests(container) { let tests=JSON.parse(localStorage.getItem('gagra_lab_tests')); let html=`<div><button onclick="addLabTest()" class="btn-primary px-3 py-1 rounded">+ Add Test</button><ul>${tests.map(t=>`<li>${t.name} - KES ${t.price}</li>`).join('')}</ul></div>`; container.innerHTML=html; }
     window.addLabTest = function() { let name=prompt("Test name"); let price=prompt("Price"); let tests=JSON.parse(localStorage.getItem('gagra_lab_tests')); let newId=tests.length?Math.max(...tests.map(t=>t.id))+1:1; tests.push({id:newId,name,price:parseInt(price)}); localStorage.setItem('gagra_lab_tests',JSON.stringify(tests)); loadModule('lab_tests'); };
     
